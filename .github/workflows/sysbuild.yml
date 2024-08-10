@@ -1,0 +1,36 @@
+# Copyright (c) 2024, Victor Chavez (vchavezb@protonmail.com)
+# SPDX-License-Identifier: Apache-2.0
+
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/zephyrproject-rtos/ci:v0.26.13
+    env:
+      CMAKE_PREFIX_PATH: /opt/toolchains
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Initialize
+        run: |
+          west init -l .
+          west update -o=--depth=1 -n
+
+      - name: Build Pass
+        run: |
+          west build app -b nucleo_f302r8 --sysbuild -d pass -- -DBOARDS_ROOT=$GITHUB_WORKSPACE/app/boards
+
+
+      - name: Build Fail
+        run: |
+          west build app -b nucleo_f302r8 --sysbuild -d fail
+
