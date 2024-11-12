@@ -39,7 +39,7 @@ jobs:
           fi
           west twister -T app -v --inline-logs --integration $EXTRA_TWISTER_FLAGS
 
-      - name: Twister Tests
+      - name: Twister Test
         working-directory: example-application
         shell: bash
         run: |
