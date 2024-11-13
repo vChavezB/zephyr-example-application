@@ -27,10 +27,10 @@ jobs:
 
       - name: Build Pass
         run: |
-          west build app -b nucleo_f302r8 --sysbuild -d pass -- -DBOARDS_ROOT=$GITHUB_WORKSPACE/app/boards
+          west build app -b nucleo_f302r8 --sysbuild -d b1
 
 
       - name: Build Fail
         run: |
-          west build app -b nucleo_f302r8 --sysbuild -d fail
+          west build app -b nucleo_f302r8 --no-sysbuild -d b2
 
